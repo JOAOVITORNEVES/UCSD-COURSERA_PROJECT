@@ -1,12 +1,13 @@
 package module1;
 
-import processing.core.PApplet;
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
+import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
 import de.fhpotsdam.unfolding.providers.AbstractMapProvider;
-import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.Microsoft;
 import de.fhpotsdam.unfolding.utils.MapUtils;
+import processing.core.PApplet; 	
 
 /** HelloWorld
   * An application with two maps side-by-side zoomed in on different locations.
@@ -16,6 +17,7 @@ import de.fhpotsdam.unfolding.utils.MapUtils;
   * */
 public class HelloWorld extends PApplet
 {
+	SimpleLinesMarker connectionMarker;
 	/** Your goal: add code to display second map, zoom in, and customize the background.
 	 * Feel free to copy and use this code, adding to it, modifying it, etc.  
 	 * Don't forget the import lines above. */
@@ -46,7 +48,7 @@ public class HelloWorld extends PApplet
 		this.background(200, 200, 200);
 		
 		// Select a map provider
-		AbstractMapProvider provider = new Google.GoogleTerrainProvider();
+		AbstractMapProvider provider = new Microsoft.AerialProvider();
 		// Set a zoom level
 		int zoomLevel = 10;
 		
@@ -66,15 +68,18 @@ public class HelloWorld extends PApplet
 		// There are several providers built-in.
 		// Note if you are working offline you must use the MBTilesMapProvider
 		map1 = new UnfoldingMap(this, 50, 50, 350, 500, provider);
-
+		map2 = new UnfoldingMap(this, 410, 50, 350, 500, provider);
+		
+		
 		// The next line zooms in and centers the map at 
 	    // 32.9 (latitude) and -117.2 (longitude)
 	    map1.zoomAndPanTo(zoomLevel, new Location(32.9f, -117.2f));
-		
+	    
 		// This line makes the map interactive
 		MapUtils.createDefaultEventDispatcher(this, map1);
-		
+		MapUtils.createDefaultEventDispatcher(this, map2);
 		// TODO: Add code here that creates map2 
+		map2.zoomAndPanTo(zoomLevel, new Location(-9.8372796f, -39.47836f));
 		// Then you'll modify draw() below
 
 	}
@@ -84,6 +89,7 @@ public class HelloWorld extends PApplet
 		// So far we only draw map1...
 		// TODO: Add code so that both maps are displayed
 		map1.draw();
+		//map2.draw();
 	}
 
 	
